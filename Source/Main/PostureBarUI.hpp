@@ -134,7 +134,7 @@ namespace ER
 
 	struct TextureData
 	{
-		ImTextureID texture = nullptr;
+		ImTextureID texture = NULL;
 		float width = 0.0f;
 		float height = 0.0f;
 

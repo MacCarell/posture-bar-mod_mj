@@ -1,3 +1,4 @@
+#pragma once
 #include "Common.hpp"
 
 using namespace ER;

@@ -1,9 +1,9 @@
 #pragma once
 
-#define _CRT_SECURE_NO_WARNINGS
+#define CRT_SECURE_NO_WARNINGS
 #define NOMINMAX
 #define WIN32_LEAN_AND_MEAN
-#define _WIN32_WINNT _WIN32_WINNT_WIN7
+#define WIN32_WINNT _WIN32_WINNT_WIN7
 
 #define BOSS_CHR_ARRAY_LEN 3
 #define ENTITY_CHR_ARRAY_LEN 8
@@ -60,8 +60,8 @@
 #include <regex>
 
 #include "Minhook/MinHook.h"
-#include "ImGui/imgui.h"
 #define IMGUI_DEFINE_MATH_OPERATORS
+#include "ImGui/imgui.h"
 #include "ImGui/imgui_internal.h"
 #include "ImGui/imgui_impl_dx12.h"
 #include "ImGui/imgui_impl_win32.h"

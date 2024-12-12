@@ -7,10 +7,8 @@
 
 using namespace ER;
 
-bool loadIni()
-{
-    try
-    {
+bool loadIni() {
+    try {
         using namespace mINI;
         INIFile config(dllPath + "PostureBarModConfig.ini");
         INIStructure ini;
@@ -38,12 +36,24 @@ bool loadIni()
         TextureFileData::entityBarFile = dllPath + ini["Textures"].get("EntityBarFillFile");
         TextureFileData::entityBorderFile = dllPath + ini["Textures"].get("EntityBarBorderFile");
         TextureData::bossOffset = FillTextureOffset{
-            { std::stof(ini["Textures"].get("BossFillTopLeftOffsetX")), std::stof(ini["Textures"].get("BossFillTopLeftOffsetY")) },
-            { std::stof(ini["Textures"].get("BossFillBotRightOffsetX")), std::stof(ini["Textures"].get("BossFillBotRightOffsetY")) }
+            {
+                std::stof(ini["Textures"].get("BossFillTopLeftOffsetX")),
+                std::stof(ini["Textures"].get("BossFillTopLeftOffsetY"))
+            },
+            {
+                std::stof(ini["Textures"].get("BossFillBotRightOffsetX")),
+                std::stof(ini["Textures"].get("BossFillBotRightOffsetY"))
+            }
         };
         TextureData::entityOffset = FillTextureOffset{
-            { std::stof(ini["Textures"].get("EntityFillTopLeftOffsetX")), std::stof(ini["Textures"].get("EntityFillTopLeftOffsetY")) },
-            { std::stof(ini["Textures"].get("EntityFillBotRightOffsetX")), std::stof(ini["Textures"].get("EntityFillBotRightOffsetY")) }
+            {
+                std::stof(ini["Textures"].get("EntityFillTopLeftOffsetX")),
+                std::stof(ini["Textures"].get("EntityFillTopLeftOffsetY"))
+            },
+            {
+                std::stof(ini["Textures"].get("EntityFillBotRightOffsetX")),
+                std::stof(ini["Textures"].get("EntityFillBotRightOffsetY"))
+            }
         };
 
         //-----------------------------------------------------------------------------------
@@ -56,21 +66,25 @@ bool loadIni()
         BarStyle::fillResizeType = EFillResizeType(stoi(ini["Style"].get("FillResizeType")));
         assert((int)BarStyle::fillResizeType >= 0 && BarStyle::fillResizeType < EFillResizeType::Last);
 
-        auto&& staggerColorMax = splitString(ini["Style"].get("StaggerColorMax"), ",");
+        auto &&staggerColorMax = splitString(ini["Style"].get("StaggerColorMax"), ",");
         assert(staggerColorMax.size() == 4);
-        BarStyle::staggerMaxColor = ImVec4(std::stof(staggerColorMax[0]), std::stof(staggerColorMax[1]), std::stof(staggerColorMax[2]), std::stof(staggerColorMax[3]));
+        BarStyle::staggerMaxColor = ImVec4(std::stof(staggerColorMax[0]), std::stof(staggerColorMax[1]),
+                                           std::stof(staggerColorMax[2]), std::stof(staggerColorMax[3]));
 
-        auto&& staggerColorMin = splitString(ini["Style"].get("StaggerColorMin"), ",");
+        auto &&staggerColorMin = splitString(ini["Style"].get("StaggerColorMin"), ",");
         assert(staggerColorMin.size() == 4);
-        BarStyle::staggerMinColor = ImVec4(std::stof(staggerColorMin[0]), std::stof(staggerColorMin[1]), std::stof(staggerColorMin[2]), std::stof(staggerColorMin[3]));
+        BarStyle::staggerMinColor = ImVec4(std::stof(staggerColorMin[0]), std::stof(staggerColorMin[1]),
+                                           std::stof(staggerColorMin[2]), std::stof(staggerColorMin[3]));
 
-        auto&& staminaColorMax = splitString(ini["Style"].get("StaminaColorMax"), ",");
+        auto &&staminaColorMax = splitString(ini["Style"].get("StaminaColorMax"), ",");
         assert(staminaColorMax.size() == 4);
-        BarStyle::staminaMaxColor = ImVec4(std::stof(staminaColorMax[0]), std::stof(staminaColorMax[1]), std::stof(staminaColorMax[2]), std::stof(staminaColorMax[3]));
+        BarStyle::staminaMaxColor = ImVec4(std::stof(staminaColorMax[0]), std::stof(staminaColorMax[1]),
+                                           std::stof(staminaColorMax[2]), std::stof(staminaColorMax[3]));
 
-        auto&& staminaColorMin = splitString(ini["Style"].get("StaminaColorMin"), ",");
+        auto &&staminaColorMin = splitString(ini["Style"].get("StaminaColorMin"), ",");
         assert(staminaColorMin.size() == 4);
-        BarStyle::staminaMinColor = ImVec4(std::stof(staminaColorMin[0]), std::stof(staminaColorMin[1]), std::stof(staminaColorMin[2]), std::stof(staminaColorMin[3]));
+        BarStyle::staminaMinColor = ImVec4(std::stof(staminaColorMin[0]), std::stof(staminaColorMin[1]),
+                                           std::stof(staminaColorMin[2]), std::stof(staminaColorMin[3]));
 
         //-----------------------------------------------------------------------------------
         //									    Boss Posture Bar
@@ -99,8 +113,10 @@ bool loadIni()
         PostureBarData::topScreenThreshold = std::stof(ini["Entity Posture Bar"].get("TopScreenThreshold"));
         PostureBarData::bottomScreenThreshold = std::stof(ini["Entity Posture Bar"].get("BottomScreenThreshold"));
         PostureBarData::usePositionFixing = ini["Entity Posture Bar"].get("UsePositionFixing") == "true";
-        PostureBarData::positionFixingMultiplierX = std::stof(ini["Entity Posture Bar"].get("PositionFixingMultiplierX"));
-        PostureBarData::positionFixingMultiplierY = std::stof(ini["Entity Posture Bar"].get("PositionFixingMultiplierY"));
+        PostureBarData::positionFixingMultiplierX = std::stof(
+            ini["Entity Posture Bar"].get("PositionFixingMultiplierX"));
+        PostureBarData::positionFixingMultiplierY = std::stof(
+            ini["Entity Posture Bar"].get("PositionFixingMultiplierY"));
 
         //-----------------------------------------------------------------------------------
         //									    Experimental
@@ -118,15 +134,12 @@ bool loadIni()
         //-----------------------------------------------------------------------------------
         Logger::useLogger = ini["Debug"].get("Log") == "true";
         offsetTesting = ini["Debug"].get("OffsetTest") == "true";
-    }
-    catch(const std::exception& e)
-    {
+    } catch (const std::exception &e) {
         Logger::useLogger = true;
         Logger::log(e.what(), LogLevel::Error);
         return false;
     }
-    catch (...) 
-    {
+    catch (...) {
         Logger::useLogger = true;
         Logger::log("Unknown exception during loading of PostureBarModConfig.ini", LogLevel::Error);
         return false;
@@ -151,9 +164,9 @@ bool loadIni()
     Logger::log("\t\tBossFillOffset: " + std::to_string(TextureData::bossOffset));
     Logger::log("\t\tEntityFillOffset: " + std::to_string(TextureData::entityOffset));
     Logger::log("\tStyle:");
-    Logger::log("\t\tFillAlignment: " + std::to_string((int)BarStyle::fillAlignment));
-    Logger::log("\t\tFillType: " + std::to_string((int)BarStyle::fillType));
-    Logger::log("\t\tFillResizeType: " + std::to_string((int)BarStyle::fillResizeType));
+    Logger::log("\t\tFillAlignment: " + std::to_string((int) BarStyle::fillAlignment));
+    Logger::log("\t\tFillType: " + std::to_string((int) BarStyle::fillType));
+    Logger::log("\t\tFillResizeType: " + std::to_string((int) BarStyle::fillResizeType));
     Logger::log("\t\tStaggerMaxColor: " + std::to_string(BarStyle::staggerMaxColor));
     Logger::log("\t\tStaggerMinColor: " + std::to_string(BarStyle::staggerMinColor));
     Logger::log("\t\tStaminaMaxColor: " + std::to_string(BarStyle::staminaMaxColor));
@@ -197,10 +210,8 @@ bool loadIni()
     return true;
 }
 
-bool saveTestOffsetToIni()
-{
-    try
-    {
+bool saveTestOffsetToIni() {
+    try {
         using namespace mINI;
         INIFile config(dllPath + "mods\\PostureBarModConfig.ini");
         INIStructure ini;
@@ -208,9 +219,8 @@ bool saveTestOffsetToIni()
         if (!config.read(ini))
             throw std::exception("Failed to read PostureModConfig.ini in mods folder");
 
-        switch (debugState)
-        {
-            using enum EDebugTestState;
+        switch (debugState) {
+                using enum EDebugTestState;
 
             case BossBarOffset:
                 ini["Boss Posture Bar"]["FirstBossScreenX"] = std::to_string(BossPostureBarData::firstBossScreenX);
@@ -225,21 +235,20 @@ bool saveTestOffsetToIni()
                 ini["General"]["ScreenPositionY"] = std::to_string(ScreenParams::posY);
                 break;
             case PosFixingMultiplier:
-                ini["Entity Posture Bar"]["PositionFixingMultiplierX"] = std::to_string((float)PostureBarData::positionFixingMultiplierX);
-                ini["Entity Posture Bar"]["PositionFixingMultiplierY"] = std::to_string((float)PostureBarData::positionFixingMultiplierY);
+                ini["Entity Posture Bar"]["PositionFixingMultiplierX"] = std::to_string(
+                    (float) PostureBarData::positionFixingMultiplierX);
+                ini["Entity Posture Bar"]["PositionFixingMultiplierY"] = std::to_string(
+                    (float) PostureBarData::positionFixingMultiplierY);
                 break;
         }
 
         config.write(ini, true);
-    }
-    catch (const std::exception& e)
-    {
+    } catch (const std::exception &e) {
         Logger::useLogger = true;
         Logger::log(e.what());
         return false;
     }
-    catch (...)
-    {
+    catch (...) {
         Logger::useLogger = true;
         Logger::log("Unknown exception during saving of PostureBarModConfig.ini");
         return false;
@@ -248,10 +257,8 @@ bool saveTestOffsetToIni()
     return true;
 }
 
-bool findDllPath()
-{
-    try
-    {
+bool findDllPath() {
+    try {
         char path[MAX_PATH];
         HMODULE moduleHandle = NULL;
 
@@ -270,20 +277,16 @@ bool findDllPath()
         dllPath = path;
 
         size_t lastBackslashPos = dllPath.find_last_of("\\");
-        if (lastBackslashPos != std::string::npos)
-        {
+        if (lastBackslashPos != std::string::npos) {
             // Remove the file name from the path
             dllPath.erase(lastBackslashPos + 1);
         }
-    }
-    catch (const std::exception& e)
-    {
+    } catch (const std::exception &e) {
         Logger::useLogger = true;
         Logger::log(e.what());
         return false;
     }
-    catch (...)
-    {
+    catch (...) {
         Logger::useLogger = true;
         Logger::log("Unknown exception during finding dll module");
         return false;
@@ -292,8 +295,7 @@ bool findDllPath()
     return true;
 }
 
-void MainThread()
-{
+void MainThread() {
     if (!findDllPath())
         return;
 
@@ -311,11 +313,12 @@ void MainThread()
     Logger::log("Starting Main Loop");
     std::pair<float, float> previousMoveVec{1.f, 1.f};
     int counter = 0;
-    while (g_Running)
-    {
-        if (offsetTesting)
-        {
-            std::pair<float, float> moveVec{ float((GetAsyncKeyState(VK_RIGHT) & 1) - (GetAsyncKeyState(VK_LEFT) & 1)), float((GetAsyncKeyState(VK_DOWN) & 1) - (GetAsyncKeyState(VK_UP) & 1)) };
+    while (g_Running) {
+        if (offsetTesting) {
+            std::pair<float, float> moveVec{
+                float((GetAsyncKeyState(VK_RIGHT) & 1) - (GetAsyncKeyState(VK_LEFT) & 1)),
+                float((GetAsyncKeyState(VK_DOWN) & 1) - (GetAsyncKeyState(VK_UP) & 1))
+            };
 
             if (counter <= 0)
                 offsetSpeed = 0.5f;
@@ -327,9 +330,8 @@ void MainThread()
             else
                 counter = std::max(0, counter - 1);
 
-            switch (debugState)
-            {
-                using enum EDebugTestState;
+            switch (debugState) {
+                    using enum EDebugTestState;
 
                 case BossBarOffset:
                     BossPostureBarData::firstBossScreenX += moveVec.first * offsetSpeed;
@@ -344,8 +346,12 @@ void MainThread()
                     ScreenParams::posY += moveVec.second * offsetSpeed;
                     break;
                 case PosFixingMultiplier:
-                    PostureBarData::positionFixingMultiplierX = std::clamp(PostureBarData::positionFixingMultiplierX + (moveVec.first * std::ceil(offsetSpeed) * 0.1), 0.0, 20.0);
-                    PostureBarData::positionFixingMultiplierY = std::clamp(PostureBarData::positionFixingMultiplierY - (moveVec.second * std::ceil(offsetSpeed) * 0.1), 0.0, 20.0);
+                    PostureBarData::positionFixingMultiplierX = std::clamp(
+                        PostureBarData::positionFixingMultiplierX + (moveVec.first * std::ceil(offsetSpeed) * 0.1), 0.0,
+                        20.0);
+                    PostureBarData::positionFixingMultiplierY = std::clamp(
+                        PostureBarData::positionFixingMultiplierY - (moveVec.second * std::ceil(offsetSpeed) * 0.1),
+                        0.0, 20.0);
                     break;
             }
 
